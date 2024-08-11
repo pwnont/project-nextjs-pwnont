@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-import { ExpressAuth } from "@auth/express";
+//import { ExpressAuth } from "@auth/express";
 //import Credentials from "@auth/express/providers/credentials";
 
 import { useMemo } from 'react'
