@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 
-import { ExpressAuth } from "@auth/express";
+//import { ExpressAuth } from "@auth/express";
 //import Credentials from "@auth/express/providers/credentials";
 
 import { useMemo } from 'react'
