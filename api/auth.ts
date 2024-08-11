@@ -9,8 +9,8 @@ import bcrypt from 'bcrypt';
 //import Credentials from "@auth/express/providers/credentials";
 
 import { useMemo } from 'react'
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+//import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+//import { setContext } from '@apollo/client/link/context';
  
 async function getUser(email: string,password: string) {
   try {
