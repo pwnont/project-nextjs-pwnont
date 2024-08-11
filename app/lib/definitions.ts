@@ -9,6 +9,11 @@ export type User = {
   password: string;
 };
 
+export type UserWeb = {
+  username: string;
+  access_token: string;
+};
+
 export type Customer = {
   id: string;
   name: string;
@@ -85,4 +90,10 @@ export type InvoiceForm = {
   customer_id: string;
   amount: number;
   status: 'pending' | 'paid';
+};
+
+export type TodoForm = {
+  id: string;
+  title: string;
+  description: string;
 };

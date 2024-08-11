@@ -1,12 +1,9 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { authConfig } from './auth.config';
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 import { ExpressAuth } from "@auth/express";
 //import Credentials from "@auth/express/providers/credentials";
@@ -15,7 +12,7 @@ import { useMemo } from 'react'
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
  
-async function getUser(email: string,password: string): Promise<User | undefined> {
+async function getUser(email: string,password: string) {
   try {
     const data = {
         "username": email,
@@ -41,12 +38,10 @@ async function getUser(email: string,password: string): Promise<User | undefined
   }
 }
  
-export const { auth, signIn ,signOut,} = NextAuth({ 
-  ...authConfig,
+export const { auth, signIn, signOut } = NextAuth({ 
   providers: [
     Credentials({
       async authorize(credentials) {
-        let user = null
         const parsedCredentials = z
           .object({ email: z.string(), password: z.string().min(6) })
           .safeParse(credentials);
@@ -54,7 +49,7 @@ export const { auth, signIn ,signOut,} = NextAuth({
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
           const user = await getUser(email,password);
-          //console.log(user);
+          //console.log(user.data.username);
           if (!user) return null;
           //const passwordsMatch = await bcrypt.compare(password, user.password);
  

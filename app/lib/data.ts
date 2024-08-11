@@ -119,6 +119,22 @@ export async function fetchFilteredInvoices(
   }
 }
 
+export async function fetchFilteredTodo() {
+
+  const res = await fetch('https://candidate-assignment.neversitup.com/todo/all',{
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
+    },
+    mode: 'no-cors'
+  })
+  //console.log(res)
+  const data1 = await res.json()
+   
+  return Response.json(data1)
+}
+
 export async function fetchInvoicesPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
@@ -163,6 +179,47 @@ export async function fetchInvoiceById(id: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
+  }
+}
+
+export async function fetchTodo() {
+  try {
+    const res = await fetch('https://candidate-assignment.neversitup.com/todo', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
+      }
+    })
+
+    const data1 = await res.json()
+    //console.log(data1)
+    return data1.data
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Create Invoice.',
+    };
+  }
+}
+
+export async function fetchTodoById(id: string) {
+  
+  try {
+    const res = await fetch('https://candidate-assignment.neversitup.com/todo/'+id, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
+      }
+    })
+
+    const data1 = await res.json()
+    //console.log(data1)
+    return data1.data
+  } catch (error) {
+    return {
+      message: 'Database Error: Failed to Create Invoice.',
+    };
   }
 }
 
