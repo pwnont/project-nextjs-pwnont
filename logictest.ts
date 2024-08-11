@@ -20,12 +20,10 @@ function permute(input: string): string[] {
 function findOdd(arr: number[]): number {
     const countMap: { [key: number]: number } = {};
 
-    // Count occurrences of each integer
     for (const num of arr) {
         countMap[num] = (countMap[num] || 0) + 1;
     }
 
-    // Find the integer with an odd count
     for (const num in countMap) {
         if (countMap[num] % 2 !== 0) {
             return parseInt(num);

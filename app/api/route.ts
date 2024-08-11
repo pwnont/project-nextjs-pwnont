@@ -6,8 +6,6 @@ export async function GET() {
    
     // return Response.json(data)
   //     const data = {
-  //   "username": 'popwuttichai',
-  //   "password": 'test1234'
   // };
 
   // const tosolist = {
@@ -40,8 +38,8 @@ export async function GET() {
   // }
 
   const data = {
-    "username": 'popwuttichai',
-    "password": 'test1234'
+    "username": '',
+    "password": ''
   };
 
   const res = await fetch('https://candidate-assignment.neversitup.com/auth/login',{
@@ -74,8 +72,8 @@ return Response.json(user)
 
 // export async function GET(){
 //     const data = {
-//         username: 'popwuttichai',
-//         password: 'test1234'
+//         username: '',
+//         password: ''
 //     }
 
 //     return NextResponse.json({data})
@@ -84,8 +82,8 @@ return Response.json(user)
 // export async function POST(){
   
 //   const data = {
-//     "username": 'popwuttichai',
-//     "password": 'test1234'
+//     "username": '',
+//     "password": ''
 //   };
 
 //   const res = await fetch('https://candidate-assignment.neversitup.com/auth/login',{

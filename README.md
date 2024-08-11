@@ -7,7 +7,59 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 # Project Name
 
 ## Project Structure
-project-root/ ├── public/ │ ├── index.html │ └── ... ├── src/ │ ├── components/ │ │ ├── ComponentName/ │ │ │ ├── ComponentName.tsx │ │ │ ├── ComponentName.test.tsx │ │ │ ├── ComponentName.module.css │ │ │ └── index.ts │ ├── pages/ │ │ ├── PageName/ │ │ │ ├── PageName.tsx │ │ │ ├── PageName.test.tsx │ │ │ ├── PageName.module.css │ │ │ └── index.ts │ ├── utils/ │ │ ├── utilFunction.ts │ │ └── utilFunction.test.ts │ ├── App.tsx │ ├── index.tsx │ └── ... ├── tests/ │ ├── setupTests.ts │ └── ... ├── .gitignore ├── package.json ├── tsconfig.json ├── jest.config.js └── README.md
+nextjs-dashboard/
+├── .env
+├── .env.example
+├── .eslintrc.json
+├── .gitignore
+├── .next/
+│   ├── app-build-manifest.json
+│   ├── build-manifest.json
+│   ├── cache/
+│   ├── package.json
+│   ├── react-loadable-manifest.json
+│   ├── server/
+│   ├── static/
+│   └── trace
+├── api/
+│   └── auth.ts
+├── app/
+│   ├── api/
+│   ├── dashboard/
+│   │   ├── layout.tsx
+│   │   ├── invoices/
+│   │   │   ├── create/
+│   │   │   │   └── page.tsx
+│   │   │   ├── [id]/
+│   │   │   │   ├── edit/
+│   │   │   │   │   ├── not-found.tsx
+│   │   │   │   │   ├── page.tsx
+│   │   │   │   │   └── page copy.tsx
+│   │   │   ├── error.tsx
+│   │   │   └── page.tsx
+│   │   ├── customers/
+│   │   │   └── page.tsx
+│   │   ├── (overview)/
+│   │   │   ├── loading.tsx
+│   │   │   └── page.tsx
+│   ├── lib/
+│   │   └── data.ts
+│   ├── logictest/
+│   ├── login/
+├── auth.config.ts
+├── auth.ts
+├── logictest.ts
+├── middleware.ts
+├── next-env.d.ts
+├── next.config.mjs
+├── package.json
+├── pnpm-lock.yaml
+├── postcss.config.js
+├── public/
+├── README.md
+├── tailwind.config.ts
+├── test/
+└── tsconfig.json
 
 ## Conventions
 
@@ -19,10 +71,14 @@ project-root/ ├── public/ │ ├── index.html │ └── ... ├�
 
 ### Directory Structure
 
-- **components/**: Contains all reusable components. Each component should have its own directory containing the component file, its styles, and tests.
-- **pages/**: Contains all page components. Each page should have its own directory containing the page file, its styles, and tests.
-- **utils/**: Contains utility functions and helpers.
-- **tests/**: Contains global test setup and configuration files.
+- **api/**: Contains API route handlers.
+- **app/**: Contains the main application code, including pages, components, and utilities.
+  - **dashboard/**: Contains dashboard-related pages and components.
+  - **lib/**: Contains utility functions and helpers.
+  - **logictest/**: Contains logic test files.
+  - **login/**: Contains login-related pages and components.
+- **public/**: Contains static assets like images and fonts.
+- **test/**: Contains global test setup and configuration files.
 
 ### Coding Standards
 
@@ -30,25 +86,22 @@ project-root/ ├── public/ │ ├── index.html │ └── ... ├�
 - **CSS Modules**: Use CSS Modules for styling components to avoid global scope issues.
 - **Testing**: Use Jest and React Testing Library for unit tests. Place test files next to the files they are testing and name them with a `.test.tsx` or `.test.ts` extension.
 
-### Example Usage
-
-```tsx
-// src/components/ExampleComponent/ExampleComponent.tsx
+// app/dashboard/invoices/[id]/edit/page.tsx
 import React from 'react';
-import styles from './ExampleComponent.module.css';
+import styles from './page.module.css';
 
-const ExampleComponent: React.FC = () => {
-  return <div className={styles.example}>Hello, World!</div>;
+const EditInvoicePage: React.FC = () => {
+  return <div className={styles.container}>Edit Invoice</div>;
 };
 
-export default ExampleComponent;
+export default EditInvoicePage;
 
-// src/components/ExampleComponent/ExampleComponent.test.tsx
+// app/dashboard/invoices/[id]/edit/page.test.tsx
 import React from 'react';
 import { render } from '@testing-library/react';
-import ExampleComponent from './ExampleComponent';
+import EditInvoicePage from './page';
 
-test('renders Hello, World!', () => {
-  const { getByText } = render(<ExampleComponent />);
-  expect(getByText('Hello, World!')).toBeInTheDocument();
+test('renders Edit Invoice', () => {
+  const { getByText } = render(<EditInvoicePage />);
+  expect(getByText('Edit Invoice')).toBeInTheDocument();
 });
