@@ -13,18 +13,6 @@ import { platform } from 'os';
 import { cookies } from 'next/headers'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 
-let access_token: string | RequestCookie | null | undefined = null;
-const isCookie = cookies().has('token');
-const cookieStore = cookies();
-  if(isCookie) {
-    access_token = cookieStore.get('token');  
-    access_token = access_token?.value;
-  }else{
-    revalidatePath('/login');
-    redirect('/login');
-  }
-
-
 const FormSchema = z.object({
   id: z.string(),
   // todoId: z.string(),
@@ -47,8 +35,8 @@ const FormSchema = z.object({
 // const CreateInvoice = FormSchema.omit({ id: true, date: true });
 // const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
-const CreateTodo = FormSchema.omit({ id: true, title: true,description: true });  
-const UpdateTodo = FormSchema.omit({ id: true, title: true,description: true });
+const CreateTodo = FormSchema.omit({ id: true, title: true, description: true });
+const UpdateTodo = FormSchema.omit({ id: true, title: true, description: true });
 
 export type State = {
   errors?: string | null;
@@ -143,7 +131,17 @@ export type State = {
 //   }
 // }
 
-export async function createTodo(prevState: State,payload: FormData) {
+export async function createTodo(prevState: State, payload: FormData) {
+  let access_token: string | RequestCookie | null | undefined = null;
+  const isCookie = cookies().has('token');
+  const cookieStore = cookies();
+  if (isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;
+  } else {
+    revalidatePath('/login');
+    redirect('/login');
+  }
   //const rawFormData = Object.fromEntries(payload.entries())
   // Test it out:
   //console.log(rawFormData);
@@ -161,7 +159,7 @@ export async function createTodo(prevState: State,payload: FormData) {
   //     message: 'Missing Fields. Failed to Create Todo.',
   //   };
   // }
-  
+
   // const { title, description } = CreateTodo.parse({
   //   title: payload.get('title'),
   //   description: payload.get('description')
@@ -177,14 +175,14 @@ export async function createTodo(prevState: State,payload: FormData) {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+access_token
-    },
+        'authorization': 'Bearer ' + access_token
+      },
       body: JSON.stringify(tosolist)
     })
 
     const data1 = await res.json()
     //console.log(data1);
-   
+
     //return Response.json(data1)
   } catch (error) {
     return {
@@ -202,6 +200,17 @@ export async function updateTodo(
   prevState: State,
   formData: FormData,
 ) {
+
+  let access_token: string | RequestCookie | null | undefined = null;
+  const isCookie = cookies().has('token');
+  const cookieStore = cookies();
+  if (isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;
+  } else {
+    revalidatePath('/login');
+    redirect('/login');
+  }
   // const validatedFields = UpdateTodo.safeParse({
   //   id: formData.get('id'),
   //   title: formData.get('title'),
@@ -220,7 +229,7 @@ export async function updateTodo(
   //   title: string;
   //   description: string;
   // }
-  
+
   // const { title, description } = CreateTodo.parse({
   //   title: payload.get('title'),
   //   description: payload.get('description')
@@ -239,17 +248,17 @@ export async function updateTodo(
       "description": formData.get('description')
     };
 
-    const res = await fetch('https://candidate-assignment.neversitup.com/todo/'+id, {
+    const res = await fetch('https://candidate-assignment.neversitup.com/todo/' + id, {
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-       'authorization' : 'Bearer '+access_token
-    },
+        'authorization': 'Bearer ' + access_token
+      },
       body: JSON.stringify(tosolist)
     })
 
     const data1 = await res.json()
-   
+
     //return Response.json(data1)
   } catch (error) {
     return {
@@ -263,13 +272,23 @@ export async function updateTodo(
 }
 
 export async function deleteTodo(id: string) {
+  let access_token: string | RequestCookie | null | undefined = null;
+  const isCookie = cookies().has('token');
+  const cookieStore = cookies();
+  if (isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;
+  } else {
+    revalidatePath('/login');
+    redirect('/login');
+  }
   try {
-    const res = await fetch('https://candidate-assignment.neversitup.com/todo/'+id, {
+    const res = await fetch('https://candidate-assignment.neversitup.com/todo/' + id, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+access_token
-    }
+        'authorization': 'Bearer ' + access_token
+      }
     })
   } catch (error) {
     return {

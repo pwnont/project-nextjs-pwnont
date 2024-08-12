@@ -13,17 +13,6 @@ import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-let access_token: string | RequestCookie | null | undefined = null;
-const isCookie = cookies().has('token');
-const cookieStore = cookies();
-  if(isCookie) {
-    access_token = cookieStore.get('token');
-    access_token = access_token?.value;  
-  }else{
-    revalidatePath('/login');
-    redirect('/login');
-  }
-
 export async function fetchRevenue() {
   try {
     // Artificially delay a response for demo purposes.
@@ -136,17 +125,28 @@ export async function fetchFilteredInvoices(
 
 export async function fetchFilteredTodo() {
 
-  const res = await fetch('https://candidate-assignment.neversitup.com/todo/all',{
+  let access_token: string | RequestCookie | null | undefined = null;
+  const isCookie = cookies().has('token');
+  const cookieStore = cookies();
+  if (isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;
+  } else {
+    revalidatePath('/login');
+    redirect('/login');
+  }
+
+  const res = await fetch('https://candidate-assignment.neversitup.com/todo/all', {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      'authorization' : 'Bearer '+access_token
+      'authorization': 'Bearer ' + access_token
     },
     mode: 'no-cors'
   })
   //console.log(res)
   const data1 = await res.json()
-   
+
   return Response.json(data1)
 }
 
@@ -172,7 +172,7 @@ export async function fetchInvoicesPages(query: string) {
 }
 
 export async function fetchInvoiceById(id: string) {
-  
+
   try {
     const data = await sql<InvoiceForm>`
       SELECT
@@ -198,13 +198,25 @@ export async function fetchInvoiceById(id: string) {
 }
 
 export async function fetchTodo() {
+
+  let access_token: string | RequestCookie | null | undefined = null;
+  const isCookie = cookies().has('token');
+  const cookieStore = cookies();
+  if (isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;
+  } else {
+    revalidatePath('/login');
+    redirect('/login');
+  }
+
   try {
     const res = await fetch('https://candidate-assignment.neversitup.com/todo', {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+access_token
-    }
+        'authorization': 'Bearer ' + access_token
+      }
     })
 
     const data1 = await res.json()
@@ -218,14 +230,25 @@ export async function fetchTodo() {
 }
 
 export async function fetchTodoById(id: string) {
-  
+
+  let access_token: string | RequestCookie | null | undefined = null;
+  const isCookie = cookies().has('token');
+  const cookieStore = cookies();
+  if (isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;
+  } else {
+    revalidatePath('/login');
+    redirect('/login');
+  }
+
   try {
-    const res = await fetch('https://candidate-assignment.neversitup.com/todo/'+id, {
+    const res = await fetch('https://candidate-assignment.neversitup.com/todo/' + id, {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+access_token
-    }
+        'authorization': 'Bearer ' + access_token
+      }
     })
 
     const data1 = await res.json()
