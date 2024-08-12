@@ -1,3 +1,9 @@
+/**
+ * Generates all possible permutations of a given string.
+ *
+ * @param input - The input string to permute.
+ * @returns An array of strings representing all possible permutations of the input string.
+ */
 function permute(input: string): string[] {
     const result: string[] = [];
 
@@ -17,6 +23,13 @@ function permute(input: string): string[] {
     return result;
 }
 
+/**
+ * Finds the integer that appears an odd number of times in the given array.
+ *
+ * @param arr - The array of numbers to search.
+ * @returns The integer that appears an odd number of times.
+ * @throws {Error} If no integer appears an odd number of times.
+ */
 function findOdd(arr: number[]): number {
     const countMap: { [key: number]: number } = {};
 
@@ -33,6 +46,12 @@ function findOdd(arr: number[]): number {
     throw new Error("No integer appears an odd number of times");
 }
 
+/**
+ * Counts the number of valid smiley faces in the given array.
+ * 
+ * @param arr - The array of strings containing smiley faces.
+ * @returns The number of valid smiley faces.
+ */
 function countSmileys(arr: string[]): number {
     const smileyRegex = /^[:;][-~]?[)D]$/;
     return arr.filter(face => smileyRegex.test(face)).length;

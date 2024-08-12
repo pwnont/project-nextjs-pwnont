@@ -32,6 +32,7 @@ async function getUser(email: string,password: string): Promise<User | undefined
       })
     
     const user = await res.json()
+    console.log(user);
     
     //const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     return user;

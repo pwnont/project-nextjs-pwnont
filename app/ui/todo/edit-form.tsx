@@ -33,7 +33,7 @@ export default function EditTodoForm({
             id="id"
             name="id"
             type="hidden"
-            defaultValue={todo.id}
+            defaultValue={todo?.id}
             placeholder="Enter Title"
             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
           />
@@ -45,7 +45,7 @@ export default function EditTodoForm({
             id="title"
             name="title"
             type="text"
-            defaultValue={todo.title}
+            defaultValue={todo?.title}
             placeholder="Enter Title"
             className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
           />

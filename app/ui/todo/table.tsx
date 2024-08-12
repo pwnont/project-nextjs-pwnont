@@ -17,12 +17,13 @@ export default async function TodoTable({
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
+      'authorization': 'Bearer '+process.env.LOGINTOKEN
     },
     mode: 'no-cors'
   })
 
   const datas = await res.json()
+  console.log(datas)
 
   return (
     <div className="mt-6 flow-root">
@@ -52,25 +53,25 @@ export default async function TodoTable({
               {datas.data?.map((data: any) => (
                 data.created_by?.username === 'popwuttichai' &&
                 <tr
-                  key={data.id}
+                  key={data?.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <th scope="col" className="px-3 py-5 font-medium">
-                    {data.no}
+                    {data?.no}
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    {data.title}
+                    {data?.title}
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    {data.description}
+                    {data?.description}
                   </th>
                   <th scope="col" className="px-3 py-5 font-medium">
-                    {data.created_at}
+                    {data?.created_at}
                   </th>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateTodo id={data.id} />
-                      <DeleteTodo id={data.id} />
+                      <UpdateTodo id={data?.id} />
+                      <DeleteTodo id={data?.id} />
                     </div>
                   </td>
                 </tr>

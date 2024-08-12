@@ -125,7 +125,7 @@ export async function fetchFilteredTodo() {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      'authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
+      'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
     },
     mode: 'no-cors'
   })
@@ -188,8 +188,8 @@ export async function fetchTodo() {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
-      }
+        'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+    }
     })
 
     const data1 = await res.json()
@@ -209,8 +209,8 @@ export async function fetchTodoById(id: string) {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
-      }
+        'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+    }
     })
 
     const data1 = await res.json()

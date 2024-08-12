@@ -11,7 +11,7 @@ export default async function TodoTable() {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ii1PM3Z2Y2VpTjdGbHRNSFBNLW43IiwiaWF0IjoxNzIzMjg3NDE4LCJleHAiOjE3MjMzNzM4MTh9.Cbw1Noi_fmiPL6cfiHIbTlmhtXbxD2SkD6kbCCM_MVg'
+      'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
     },
     mode: 'no-cors'
   })
