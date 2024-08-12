@@ -5,13 +5,23 @@ import { UpdateTodo, DeleteTodo } from '@/app/ui/todo/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocalTodo } from '@/app/lib/utils';
 import { fetchFilteredTodo } from '@/app/lib/data';
+import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation';
 
 export default async function TodoTable() {
+  const cookieStore = cookies()
+  const hasCookie = cookieStore.has('token')
+  const access_token = cookieStore.get('token')
+
+    if (!hasCookie) {
+        notFound();
+    }
+
   const res = await fetch('https://candidate-assignment.neversitup.com/todo/all', {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+      'authorization' : 'Bearer '+(access_token?.value ?? '')
     },
     mode: 'no-cors'
   })

@@ -52,7 +52,7 @@ export async function GET() {
   })
 
 const user = await res.json()
-console.log(user)
+//console.log(user)
 
 //const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
 return Response.json(user)

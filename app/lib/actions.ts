@@ -10,6 +10,20 @@ import { cp } from 'fs';
 import { describe } from 'node:test';
 import { title } from 'process';
 import { platform } from 'os';
+import { cookies } from 'next/headers'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
+
+let access_token: string | RequestCookie | null | undefined = null;
+const isCookie = cookies().has('token');
+const cookieStore = cookies();
+  if(isCookie) {
+    access_token = cookieStore.get('token');  
+    access_token = access_token?.value;
+  }else{
+    revalidatePath('/login');
+    redirect('/login');
+  }
+
 
 const FormSchema = z.object({
   id: z.string(),
@@ -157,15 +171,13 @@ export async function createTodo(prevState: State,payload: FormData) {
     "title": payload.get('title'),
     "description": payload.get('description')
   };
-  
-  console.log(tosolist);
 
   try {
     const res = await fetch('https://candidate-assignment.neversitup.com/todo', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+        'authorization' : 'Bearer '+access_token
     },
       body: JSON.stringify(tosolist)
     })
@@ -231,7 +243,7 @@ export async function updateTodo(
       method: 'PATCH',
       headers: {
         'content-type': 'application/json',
-       'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+       'authorization' : 'Bearer '+access_token
     },
       body: JSON.stringify(tosolist)
     })
@@ -256,7 +268,7 @@ export async function deleteTodo(id: string) {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+        'authorization' : 'Bearer '+access_token
     }
     })
   } catch (error) {

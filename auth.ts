@@ -7,11 +7,12 @@ import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers'
 
 //import { ExpressAuth } from "@auth/express";
 //import Credentials from "@auth/express/providers/credentials";
 
-import { useMemo } from 'react'
+//import { useMemo } from 'react'
 //import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 //import { setContext } from '@apollo/client/link/context';
  
@@ -28,11 +29,17 @@ async function getUser(email: string,password: string): Promise<User | undefined
         headers: {
           'content-type': 'application/json'
         },
-        mode: 'no-cors'
+        mode: 'cors'
       })
     
     const user = await res.json()
-    console.log(user);
+    //console.log(user);
+
+    // Set access token in cookie
+    //setCookie('accessToken', '1111');
+    if (user.access_token) {
+      cookies().set('token', user.access_token)
+    }
     
     //const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
     return user;
@@ -42,11 +49,11 @@ async function getUser(email: string,password: string): Promise<User | undefined
   }
 }
  
-export const { auth, signIn ,signOut,} = NextAuth({ 
+export const { auth, signIn ,signOut} = NextAuth({ 
   ...authConfig,
   providers: [
     Credentials({
-      async authorize(credentials) {
+      async authorize(credentials, request) {
         let user = null
         const parsedCredentials = z
           .object({ email: z.string(), password: z.string().min(6) })
@@ -58,7 +65,7 @@ export const { auth, signIn ,signOut,} = NextAuth({
           //console.log(user);
           if (!user) return null;
           //const passwordsMatch = await bcrypt.compare(password, user.password);
- 
+          //setCookie('accessToken', '1111');
           //if (passwordsMatch) 
           return user;
         }

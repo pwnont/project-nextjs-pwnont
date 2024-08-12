@@ -8,6 +8,21 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { cookies } from 'next/headers'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+
+let access_token: string | RequestCookie | null | undefined = null;
+const isCookie = cookies().has('token');
+const cookieStore = cookies();
+  if(isCookie) {
+    access_token = cookieStore.get('token');
+    access_token = access_token?.value;  
+  }else{
+    revalidatePath('/login');
+    redirect('/login');
+  }
 
 export async function fetchRevenue() {
   try {
@@ -125,7 +140,7 @@ export async function fetchFilteredTodo() {
     method: 'GET',
     headers: {
       'content-type': 'application/json',
-      'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+      'authorization' : 'Bearer '+access_token
     },
     mode: 'no-cors'
   })
@@ -188,7 +203,7 @@ export async function fetchTodo() {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+        'authorization' : 'Bearer '+access_token
     }
     })
 
@@ -209,7 +224,7 @@ export async function fetchTodoById(id: string) {
       method: 'GET',
       headers: {
         'content-type': 'application/json',
-        'authorization' : 'Bearer '+process.env.NEXT_PUBLIC_API_KEY
+        'authorization' : 'Bearer '+access_token
     }
     })
 

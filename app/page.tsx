@@ -4,8 +4,17 @@ import Link from 'next/link';
 import styles from '@/app/ui/home.module.css';
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
+import { cookies } from 'next/headers'
+import { notFound } from 'next/navigation';
 
 export default function Page() {
+  const cookieStore = cookies()
+    const hasCookie = cookieStore.has('token')
+
+    if (!hasCookie) {
+        notFound();
+    }
+
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className={styles.shape} />

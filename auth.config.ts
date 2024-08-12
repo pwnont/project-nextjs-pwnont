@@ -1,23 +1,30 @@
 import type { NextAuthConfig } from 'next-auth';
 //import { signOut } from './auth';
- 
+
 export const authConfig = {
   pages: {
     signIn: '/login'
   },
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user, account, profile, email, credentials }) {
+      console.log( user, account, profile, email, credentials);
       if (user) {
+        //setCookie('token', account.accessToken, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
+        //setCookie('token', '111');
+        // const res = credentials.req.res;
+        // if (res) {
+        //   res.setHeader('Set-Cookie', 'accessToken=1111; Max-Age=2592000; Path=/; HttpOnly');
+        // }
         return true;
       }
       return false;
     },
     async redirect({ url, baseUrl }) {
-      return baseUrl+'/dashboard';
+      return baseUrl + '/dashboard';
     },
-    async session({ session}) {
-      return session;
-    },
+    // async session({ session, token }) {
+    //   return session;
+    // },
   },
   // callbacks: {
   //   authorized({ auth, request: { nextUrl } }) {
