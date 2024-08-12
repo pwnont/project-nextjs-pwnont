@@ -5,14 +5,14 @@ import styles from '@/app/ui/home.module.css';
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { cookies } from 'next/headers'
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
   const cookieStore = cookies()
     const hasCookie = cookieStore.has('token')
 
     if (!hasCookie) {
-        notFound();
+      redirect('/login');
     }
 
   return (

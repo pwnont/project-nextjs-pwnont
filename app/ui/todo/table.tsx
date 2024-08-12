@@ -6,7 +6,7 @@ import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocalTodo } from '@/app/lib/utils';
 import { fetchFilteredTodo } from '@/app/lib/data';
 import { cookies } from 'next/headers'
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export default async function TodoTable({
   query,
@@ -20,7 +20,7 @@ export default async function TodoTable({
   const access_token = cookieStore.get('token')
 
     if (!hasCookie) {
-        notFound();
+      redirect('/login');
     }
 
   const res = await fetch('https://candidate-assignment.neversitup.com/todo/all', {

@@ -2,7 +2,7 @@ import Form from '@/app/ui/todo/create-form';
 import Breadcrumbs from '@/app/ui/todo/breadcrumbs';
 import { fetchTodo } from '@/app/lib/data';
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
  
 export default async function Page() {
   const todo = await fetchTodo();
@@ -11,7 +11,7 @@ export default async function Page() {
     const hasCookie = cookieStore.has('token')
 
     if (!hasCookie) {
-        notFound();
+      redirect('/login');
     }
  
   return (

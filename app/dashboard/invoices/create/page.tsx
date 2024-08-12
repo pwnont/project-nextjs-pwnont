@@ -2,7 +2,7 @@
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchCustomers } from '@/app/lib/data';
 import { cookies } from 'next/headers';
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
  
 export default async function Page() {
   const customers = await fetchCustomers();
@@ -10,7 +10,7 @@ export default async function Page() {
     const hasCookie = cookieStore.has('token')
 
     if (!hasCookie) {
-        notFound();
+      redirect('/login');
     }
  
   return (

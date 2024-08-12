@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import CardWrapper from '@/app/ui/dashboard/cards';
 import { RevenueChartSkeleton, LatestInvoicesSkeleton, CardsSkeleton } from '@/app/ui/skeletons';
 import { cookies } from 'next/headers'
-import { notFound } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 export default async function Page() {
 
@@ -15,7 +15,7 @@ export default async function Page() {
     const hasCookie = cookieStore.has('token')
 
     if (!hasCookie) {
-        notFound();
+        redirect('/login');
     }
     
     return (
