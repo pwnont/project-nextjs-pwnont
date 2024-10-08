@@ -6,6 +6,7 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  StockField
 } from './definitions';
 import { formatCurrency } from './utils';
 import { cookies } from 'next/headers'
@@ -125,29 +126,29 @@ export async function fetchFilteredInvoices(
 
 export async function fetchFilteredTodo() {
 
-  let access_token: string | RequestCookie | null | undefined = null;
-  const isCookie = cookies().has('token');
-  const cookieStore = cookies();
-  if (isCookie) {
-    access_token = cookieStore.get('token');
-    access_token = access_token?.value;
-  } else {
-    revalidatePath('/login');
-    redirect('/login');
-  }
+  // let access_token: string | RequestCookie | null | undefined = null;
+  // const isCookie = cookies().has('token');
+  // const cookieStore = cookies();
+  // if (isCookie) {
+  //   access_token = cookieStore.get('token');
+  //   access_token = access_token?.value;
+  // } else {
+  //   revalidatePath('/login');
+  //   redirect('/login');
+  // }
 
-  const res = await fetch('https://candidate-assignment.neversitup.com/todo/all', {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      'authorization': 'Bearer ' + access_token
-    },
-    mode: 'no-cors'
-  })
-  //console.log(res)
-  const data1 = await res.json()
+  // const res = await fetch('https://candidate-assignment.neversitup.com/todo/all', {
+  //   method: 'GET',
+  //   headers: {
+  //     'content-type': 'application/json',
+  //     'authorization': 'Bearer ' + access_token
+  //   },
+  //   mode: 'no-cors'
+  // })
+  // //console.log(res)
+  // const data1 = await res.json()
 
-  return Response.json(data1)
+  // return Response.json(data1)
 }
 
 export async function fetchInvoicesPages(query: string) {
@@ -199,66 +200,66 @@ export async function fetchInvoiceById(id: string) {
 
 export async function fetchTodo() {
 
-  let access_token: string | RequestCookie | null | undefined = null;
-  const isCookie = cookies().has('token');
-  const cookieStore = cookies();
-  if (isCookie) {
-    access_token = cookieStore.get('token');
-    access_token = access_token?.value;
-  } else {
-    revalidatePath('/login');
-    redirect('/login');
-  }
+  // let access_token: string | RequestCookie | null | undefined = null;
+  // const isCookie = cookies().has('token');
+  // const cookieStore = cookies();
+  // if (isCookie) {
+  //   access_token = cookieStore.get('token');
+  //   access_token = access_token?.value;
+  // } else {
+  //   revalidatePath('/login');
+  //   redirect('/login');
+  // }
 
-  try {
-    const res = await fetch('https://candidate-assignment.neversitup.com/todo', {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-        'authorization': 'Bearer ' + access_token
-      }
-    })
+  // try {
+  //   const res = await fetch('https://candidate-assignment.neversitup.com/todo', {
+  //     method: 'GET',
+  //     headers: {
+  //       'content-type': 'application/json',
+  //       'authorization': 'Bearer ' + access_token
+  //     }
+  //   })
 
-    const data1 = await res.json()
-    //console.log(data1)
-    return data1.data
-  } catch (error) {
-    return {
-      message: 'Database Error: Failed to Create Invoice.',
-    };
-  }
+  //   const data1 = await res.json()
+  //   //console.log(data1)
+  //   return data1.data
+  // } catch (error) {
+  //   return {
+  //     message: 'Database Error: Failed to Create Invoice.',
+  //   };
+  // }
 }
 
 export async function fetchTodoById(id: string) {
 
-  let access_token: string | RequestCookie | null | undefined = null;
-  const isCookie = cookies().has('token');
-  const cookieStore = cookies();
-  if (isCookie) {
-    access_token = cookieStore.get('token');
-    access_token = access_token?.value;
-  } else {
-    revalidatePath('/login');
-    redirect('/login');
-  }
+  // let access_token: string | RequestCookie | null | undefined = null;
+  // const isCookie = cookies().has('token');
+  // const cookieStore = cookies();
+  // if (isCookie) {
+  //   access_token = cookieStore.get('token');
+  //   access_token = access_token?.value;
+  // } else {
+  //   revalidatePath('/login');
+  //   redirect('/login');
+  // }
 
-  try {
-    const res = await fetch('https://candidate-assignment.neversitup.com/todo/' + id, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-        'authorization': 'Bearer ' + access_token
-      }
-    })
+  // try {
+  //   const res = await fetch('https://candidate-assignment.neversitup.com/todo/' + id, {
+  //     method: 'GET',
+  //     headers: {
+  //       'content-type': 'application/json',
+  //       'authorization': 'Bearer ' + access_token
+  //     }
+  //   })
 
-    const data1 = await res.json()
-    //console.log(data1)
-    return data1.data
-  } catch (error) {
-    return {
-      message: 'Database Error: Failed to Create Invoice.',
-    };
-  }
+  //   const data1 = await res.json()
+  //   //console.log(data1)
+  //   return data1.data
+  // } catch (error) {
+  //   return {
+  //     message: 'Database Error: Failed to Create Invoice.',
+  //   };
+  // }
 }
 
 export async function fetchCustomers() {
@@ -272,6 +273,7 @@ export async function fetchCustomers() {
     `;
 
     const customers = data.rows;
+    console.log(customers);
     return customers;
   } catch (err) {
     console.error('Database Error:', err);
@@ -309,5 +311,22 @@ export async function fetchFilteredCustomers(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
+  }
+}
+
+export async function fetchStock() {
+  try {
+    const data = await sql<StockField>`
+      SELECT *
+      FROM data AS d
+      LEFT JOIN y_param AS yp ON d.y_param_id = yp.id
+      LEFT JOIN stock AS st ON yp.stock_id = st.id;
+    `;
+
+    const stock = data.rows;
+    return stock;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all customers.');
   }
 }

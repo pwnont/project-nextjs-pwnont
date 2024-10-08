@@ -5,13 +5,13 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
  
 export default async function Page() {
-  const customers = await fetchCustomers();
-  const cookieStore = cookies()
-    const hasCookie = cookieStore.has('token')
+  // const customers = await fetchCustomers();
+  // const cookieStore = cookies()
+  //   const hasCookie = cookieStore.has('token')
 
-    if (!hasCookie) {
-      redirect('/login');
-    }
+  //   if (!hasCookie) {
+  //     redirect('/login');
+  //   }
  
   return (
     <main>

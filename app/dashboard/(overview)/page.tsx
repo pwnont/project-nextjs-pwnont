@@ -11,12 +11,12 @@ import { redirect } from 'next/navigation';
 
 export default async function Page() {
 
-    const cookieStore = cookies()
-    const hasCookie = cookieStore.has('token')
+    // const cookieStore = cookies()
+    // const hasCookie = cookieStore.has('token')
 
-    if (!hasCookie) {
-        redirect('/login');
-    }
+    // if (!hasCookie) {
+    //     redirect('/login');
+    // }
     
     return (
         <main>
@@ -24,21 +24,21 @@ export default async function Page() {
                 Dashboard
             </h1>
             <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-                <Suspense fallback={<LatestInvoicesSkeleton />}>
+                {/* <Suspense fallback={<LatestInvoicesSkeleton />}>
                     <TodoList />
                 </Suspense>
-                {/* <Suspense fallback={<CardsSkeleton />}>
+                <Suspense fallback={<CardsSkeleton />}>
                     <CardWrapper />
                 </Suspense> */}
             </div>
-            {/* <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
                 <Suspense fallback={<RevenueChartSkeleton />}>
                     <RevenueChart />
                 </Suspense>
                 <Suspense fallback={<LatestInvoicesSkeleton />}>
                     <LatestInvoices />
                 </Suspense>
-            </div> */}
+            </div>
         </main>
     );
 }

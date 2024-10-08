@@ -8,11 +8,11 @@ export default async function Page() {
   const todo = await fetchTodo();
 
   const cookieStore = cookies()
-    const hasCookie = cookieStore.has('token')
+    // const hasCookie = cookieStore.has('token')
 
-    if (!hasCookie) {
-      redirect('/login');
-    }
+    // if (!hasCookie) {
+    //   redirect('/login');
+    // }
  
   return (
     <main>
@@ -26,7 +26,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form todo={todo} />
+      {/* <Form todo={todo} /> */}
     </main>
   );
 }

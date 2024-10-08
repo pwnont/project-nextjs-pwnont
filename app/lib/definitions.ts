@@ -97,3 +97,11 @@ export type TodoForm = {
   title: string;
   description: string;
 };
+
+export type StockField = {
+  id: string;
+  name: string;
+  timeframe:string;
+  unit:string;
+  y_unit:string;
+};
