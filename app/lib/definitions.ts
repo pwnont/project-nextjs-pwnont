@@ -83,6 +83,7 @@ export type FormattedCustomersTable = {
 export type CustomerField = {
   id: string;
   name: string;
+  dateFrom:Date;
 };
 
 export type InvoiceForm = {
@@ -98,10 +99,44 @@ export type TodoForm = {
   description: string;
 };
 
-export type StockField = {
+export type SearchForm = {
   id: string;
+  dateFrom: Date;
+  dateTo: Date;
+  name:string;
+};
+
+export type StockField = {
+  id: number;         // Unique identifier
+  no: number;          // ลำดับ
+  name: string;       // รายชื่อหุ้น
+  amount: string;     // จำนวนข้อมูล
+  amount_p80: string;        // -Y = -YP80
+  amount_p50: string;        // -Y = -YP50
+  amount_p20: string;        // -Y = -YP20
+  chance_p80: string;        // -Y = -YP20
+  chance_p50: string;        // -Y = -YP20
+  chance_p20: string;        // -Y = -YP20
+};
+
+export type StockDataField = {
+  amount: string;
+  chance_50: number;
+  chance_80: number;
+  change_20: number;
+  create_by: string | null;
+  create_date: Date;
+  date: Date;
+  id: number;
   name: string;
-  timeframe:string;
-  unit:string;
-  y_unit:string;
+  prefix: string;
+  stock_id: number;
+  unit: string;
+  update_by: string | null;
+  update_date: Date;
+  y_param_id: number;
+  y_unit: string;
+  yp_20: string;
+  yp_50: string;
+  yp_80: string;
 };

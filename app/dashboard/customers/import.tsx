@@ -1,11 +1,12 @@
 import Form from '@/app/ui/invoices/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-import { fetchCustomers } from '@/app/lib/data';
+import { fetchCustomers, fetchStock } from '@/app/lib/data';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
  
 export default async function Page() {
-   const customers = await fetchCustomers();
+   //const customers = await fetchCustomers();
+   const customers = await fetchStock();
   // const cookieStore = cookies()
   //   const hasCookie = cookieStore.has('token')
 
@@ -15,7 +16,7 @@ export default async function Page() {
  
   return (
     <main>
-      <Breadcrumbs
+      {/* <Breadcrumbs
         breadcrumbs={[
           { label: 'Invoices', href: '/dashboard/invoices' },
           {
@@ -24,8 +25,8 @@ export default async function Page() {
             active: true,
           },
         ]}
-      />
-      <Form customers={customers} />
+      /> */}
+      <Import stock={customers} />
     </main>
   );
 }

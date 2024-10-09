@@ -6,7 +6,7 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
-  StockField
+  StockDataField
 } from './definitions';
 import { formatCurrency } from './utils';
 import { cookies } from 'next/headers'
@@ -273,7 +273,7 @@ export async function fetchCustomers() {
     `;
 
     const customers = data.rows;
-    console.log(customers);
+    //console.log(customers);
     return customers;
   } catch (err) {
     console.error('Database Error:', err);
@@ -316,11 +316,13 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchStock() {
   try {
-    const data = await sql<StockField>`
+    const data = await sql<StockDataField>`
       SELECT *
       FROM data AS d
-      LEFT JOIN y_param AS yp ON d.y_param_id = yp.id
-      LEFT JOIN stock AS st ON yp.stock_id = st.id;
+      LEFT JOIN y_param AS yp 
+      ON d.y_param_id = yp.id
+      LEFT JOIN stock AS st 
+      ON d.stock_id = st.id;
     `;
 
     const stock = data.rows;
