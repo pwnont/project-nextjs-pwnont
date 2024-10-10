@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
+import { createStock } from '@/app/lib/actions';
+import StockField from '@/app/dashboard/customers/stock';
 
 export const config = {
     api: {
@@ -21,7 +23,12 @@ export async function POST(req: NextRequest) {
             const worksheet = workbook.Sheets[sheetName]; // Get the first sheet
             const data = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Convert to array
 
-            console.log(data); // Log the array for debugging
+            data.forEach(async (row: any, index: number) => {
+                if (index > 2) {
+                    await createStock(row);
+                }
+            });
+            await StockField({ searchParams: { query: 'stock' } });
             return NextResponse.json(data); // Return the parsed data
         } else {
             return NextResponse.json({ error: 'No file uploaded or file is not valid' }, { status: 400 });

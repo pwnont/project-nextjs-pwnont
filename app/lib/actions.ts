@@ -30,7 +30,7 @@ export async function searchStock(formData: FormData) {
       LEFT JOIN y_param AS yp 
       ON d.y_param_id = yp.id
       LEFT JOIN stock AS st 
-      ON d.stock_id = ${rawFormData.customerId};
+      ON d.stock_id = ${String(rawFormData.customerId)};
     `;
 
   const stock = data.rows;
@@ -38,59 +38,94 @@ export async function searchStock(formData: FormData) {
   return stock;
 }
 
-export async function createStock(formData: FormData) {
-  const rawFormData = {
-    customerId: formData.get('customerId')
-  };
-  // Test it out:
-//   await sql<StockDataField>`
-//       INSERT INTO data (
-//     amount,
-//     chance_50,
-//     chance_80,
-//     change_20,
-//     create_by,
-//     create_date,
-//     date,
-//     id,
-//     name,
-//     prefix,
-//     stock_id,
-//     unit,
-//     update_by,
-//     update_date,
-//     y_param_id,
-//     y_unit,
-//     yp_20,
-//     yp_50,
-//     yp_80
-// ) VALUES (
-//     377,
-//     2.4,
-//     3.8,
-//     0.9,
-//     'pop',
-//     '2024-10-08 15:47:10',
-//     '2024-10-08 00:00:00',
-//     2,
-//     'TQQQ',
-//     'minus',
-//     2,
-//     'second',
-//     'pop',
-//     '2024-10-08 15:47:10',
-//     1,
-//     '%',
-//     1.1,
-//     0.6,
-//     0.5
-// );
-//     `;
+export async function getStockById(name: string) {
+  const data = await sql`
+      SELECT *
+      FROM stock where name = ${name};
+    `;
 
-// await sql`
-//       INSERT INTO y_param (id,stock_id,date,prefix)
-//       VALUES (DEFAULT,3,NOW(),'minus');
-//     `;
+  const stock = data.rows;
+  return stock[0];
+}
+
+export async function getYParamById(prefix: string) {
+  const data = await sql`
+      SELECT *
+      FROM y_param where prefix = ${prefix};
+    `;
+
+  const stock = data.rows;
+  return stock[0];
+}
+
+
+export async function createStock(data: { [key: string]: any }) {
+  if (!data) {
+    throw new Error('No data provided');
+  }
+
+  const stockMaster = await getStockById(data[1]);
+    let thePrefix = 'plus';
+    if (data[2] === '-') {
+      thePrefix = 'minus';
+    } else if (data[3] === '-h') {
+      thePrefix = 'minush';
+    } else if (data[4] === '+h') {
+      thePrefix = 'plush';
+    } else {
+      thePrefix = 'plus';
+    }
+  
+  const yParam = await getYParamById(thePrefix);
+
+  if (data[0]) {
+    try {
+      await sql`
+      UPDATE data set y_param_id=${yParam.id}, yp_80=${data[3]}, yp_50=${data[4]}, yp_20=${data[5]}, chance_80=${data[6]}, chance_50=${data[7]}, chance_20=${data[8]}, amount=${data[9]}, update_date=${new Date().toISOString()} where id=${data[0]};`;
+    } catch (error) {
+      console.error('Error inserting data:', error);
+      throw new Error('Failed to create stock entry');
+    }
+  } else {
+    try {
+      await sql`
+      INSERT INTO data (
+        id,
+        y_param_id,
+        yp_80,
+        yp_50,
+        yp_20,
+        chance_80,
+        chance_50,
+        chance_20,
+        amount,
+        create_date,
+        update_date,
+        create_by,
+        update_by,
+        stock_id
+      ) VALUES (
+        Default,
+        ${yParam.id},
+        ${data[3]},
+        ${data[4]},
+        ${data[5]},
+        ${data[6]},
+        ${data[7]},
+        ${data[8]},
+        ${data[9]},
+        ${new Date().toISOString()},
+        ${new Date().toISOString()},
+        'admin',
+        'admin',
+        ${stockMaster.id}
+      );
+    `;
+    } catch (error) {
+      console.error('Error inserting data:', error);
+      throw new Error('Failed to create stock entry');
+    }
+  }
 }
 
 export async function authenticate(

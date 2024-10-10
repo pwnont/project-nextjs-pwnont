@@ -317,7 +317,7 @@ export async function fetchFilteredCustomers(query: string) {
 export async function fetchStock() {
   try {
     const data = await sql<StockDataField>`
-      SELECT *
+      SELECT d.id, d.stock_id, d.y_param_id, d.yp_80, d.yp_50, d.yp_20, d.amount, d.chance_80, d.chance_50, d.chance_20, d.create_date, d.update_date, d.create_by, d.update_by, yp.prefix, st.name, st.unit, st.y_unit
       FROM data AS d
       LEFT JOIN y_param AS yp 
       ON d.y_param_id = yp.id
