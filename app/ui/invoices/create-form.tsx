@@ -27,12 +27,13 @@ export default function Form({ stock }: { stock: StockDataField[] }) {
                 </option>
                 {stock.map((stock) => (
                     <option key={stock.id} value={stock.id}>
-                        {stock.name}
+                        {stock.prefix+' '+stock.name}
                     </option>
                 ))}
             </select>
             <Button type="submit">Search</Button>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
         </div>
-    </form>;
+    </form>
+    ;
 }

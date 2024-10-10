@@ -17,12 +17,13 @@ interface RowData {
 const columns: GridColDef[] = [
   { field: 'no', headerName: 'ลำดับ', width:90 , align: 'center',headerAlign: 'center'},
   { field: 'name', headerName: 'รายชื่อหุ้น', width:100 , align: 'center',headerAlign: 'center'},
+  { field: 'amount', headerName: 'จำนวนข้อมูล', flex: 1 ,headerAlign: 'center', align: 'center'},
   { field: 'amount_p80', headerName: 'จำนวนข้อมูล', flex: 1 ,headerAlign: 'center', align: 'center'},
-  { field: 'chance_p80', headerName: 'โอกาสเกิด', flex: 1 ,headerAlign: 'center', align: 'center'},
+  { field: 'chance_p80', headerName: 'โอกาสเกิดขึ้นต่อวัน', flex: 1 ,headerAlign: 'center', align: 'center'},
   { field: 'amount_p50', headerName: 'จำนวนข้อมูล', flex: 1 ,headerAlign: 'center', align: 'center'},
-  { field: 'chance_p50', headerName: 'โอกาสเกิด', flex: 1 ,headerAlign: 'center', align: 'center'},
+  { field: 'chance_p50', headerName: 'โอกาสเกิดขึ้นต่อวัน', flex: 1 ,headerAlign: 'center', align: 'center'},
   { field: 'amount_p20', headerName: 'จำนวนข้อมูล', flex: 1 ,headerAlign: 'center', align: 'center'},
-  { field: 'chance_p20', headerName: 'โอกาสเกิด', flex: 1 ,headerAlign: 'center', align: 'center'},
+  { field: 'chance_p20', headerName: 'โอกาสเกิดขึ้นต่อวัน', flex: 1 ,headerAlign: 'center', align: 'center'},
 ];
 
 const columnGroupingModel: GridColumnGroupingModel = [
@@ -47,22 +48,21 @@ export default async function StockField() {
   const StockField = await fetchStock();
   console.log(StockField);
 
-  const rows: RowData[] = StockField.map(stock => ({
-    id: stock.id, // Assuming 'no' is unique and can be used as an id
-    no: stock.id,
-    name: stock.name,
-    amount_p80: stock.amount,
-    amount_p50: stock.amount,
-    amount_p20: stock.amount, 
-    chance_p80: ((stock.prefix === "minus" || stock.prefix === "minush")?"-":null)+stock.yp_80+stock.y_unit,
-    chance_p50: ((stock.prefix === "minus" || stock.prefix === "minush")?"-":null)+stock.yp_50+stock.y_unit,
-    chance_p20: ((stock.prefix === "minus" || stock.prefix === "minush")?"-":null)+stock.yp_20+stock.y_unit,
-  }));
-
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <DataGrid
-        rows={rows}
+        rows={StockField.map(stock => ({
+          id: stock.id, // Assuming 'no' is unique and can be used as an id
+          no: stock.id,
+          name: stock.name,
+          amount: stock.amount,
+          amount_p80: ((stock.prefix === "minus" || stock.prefix === "minush") ? "-" : null) + stock.yp_80 + stock.y_unit,
+          amount_p50: ((stock.prefix === "minus" || stock.prefix === "minush") ? "-" : null) + stock.yp_50 + stock.y_unit,
+          amount_p20: ((stock.prefix === "minus" || stock.prefix === "minush") ? "-" : null) + stock.yp_20 + stock.y_unit,
+          chance_p80: stock.chance_80,
+          chance_p50: stock.chance_50,
+          chance_p20: stock.change_20,
+        }))}
         columns={columns}
         columnGroupingModel={columnGroupingModel}
         columnGroupHeaderHeight={36}

@@ -332,3 +332,20 @@ export async function fetchStock() {
     throw new Error('Failed to fetch all customers.');
   }
 }
+
+export async function fetchMasterStock() {
+  try {
+    const data = await sql<StockDataField>`
+      SELECT *
+      FROM stock AS st
+      LEFT JOIN y_param AS yp 
+      ON st.id = yp.stock_id
+    `;
+
+    const stock = data.rows;
+    return stock;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all customers.');
+  }
+}

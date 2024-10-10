@@ -1,41 +1,47 @@
-import React from 'react';
+"use client"
+import React, { useState } from 'react';
 import DataGridComponent from '@/app/dashboard/customers/DataGridComponent';
 import StockField from '@/app/dashboard/customers/stock';
 import Search from '@/app/dashboard/customers/search';
 import Import from '@/app/dashboard/customers/import';
 import Form from '@/app/ui/invoices/create-form';
 
-// export default async function Page() {
-//     const stock = await fetchStock();
-//     console.log(stock)
-//     const Home: React.FC = () => {
-//       return (
-//         <div>
-//           <h1>Data Grid with Inline Editing</h1>
-//           <DataGridComponent />
-//         </div>
-//       );
-//     };
-//     //return <p>Customers Page</p>;
-//   }
-
 const Home: React.FC = () => {
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      //console.log('Selected file:', file);
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/dashboard/customers/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      const jsonData = await response.json();
+    }
+  };
+
   return (
     <div>
-      {/* <h1>ค่า Y ที่อยู่ในช่วงขาขึ้น ข้อมูลตั้งแต่วันที่ 8 เม.ย. 2567 - 31 ก.ค. 2567 (80 วันเทรด)</h1> */}
-      <Search />
-      <hr></hr>
-      <h2>กราฟ 15 วินาที ค่า -y</h2>
-      <StockField />
-      {/* <hr></hr>
-      <h2>กราฟ 15 วินาที ค่า +y</h2>
-      <StockField />
-      <hr></hr>
-      <h2>กราฟ 15 วินาที ค่า -Yh</h2>
-      <StockField />
-      <hr></hr>
-      <h2>กราฟ 15 วินาที ค่า -Yh</h2>
-      <StockField /> */}
+      {/* <Search /> */}
+      {/* <h2>กราฟ 15 วินาที ค่า -y</h2> */}
+      {/* <StockField /> */}
+
+      {/* File Upload Section */}
+      <div>
+        <input 
+          type="file" 
+          accept=".xlsx, .xls" 
+          onChange={handleFileUpload} 
+        />
+      </div>
     </div>
   );
 };
