@@ -1,6 +1,5 @@
 //"use client"
 import React, { useState } from 'react';
-import DataGridComponent from '@/app/dashboard/customers/DataGridComponent';
 import StockField from '@/app/dashboard/customers/stock';
 import Search from '@/app/dashboard/customers/search';
 import Import from '@/app/ui/invoices/import';

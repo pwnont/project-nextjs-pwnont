@@ -123,7 +123,7 @@ export type StockDataField = {
   amount: string;
   chance_50: number;
   chance_80: number;
-  change_20: number;
+  chance_20: number;
   create_by: string | null;
   create_date: Date;
   date: Date;

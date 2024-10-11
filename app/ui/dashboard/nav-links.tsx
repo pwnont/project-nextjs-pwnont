@@ -16,11 +16,11 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
-  {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
-    icon: DocumentDuplicateIcon,
-  },
+  // {
+  //   name: 'Invoices',
+  //   href: '/dashboard/invoices',
+  //   icon: DocumentDuplicateIcon,
+  // },
   { name: 'Stock', href: '/dashboard/customers', icon: CurrencyDollarIcon },
   { name: 'Step Strategy', href: '/dashboard/strategy', icon: PresentationChartBarIcon },
   { name: 'Graph', href: '/dashboard/graph', icon: PresentationChartLineIcon },

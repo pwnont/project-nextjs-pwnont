@@ -4,20 +4,20 @@ import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 //import { updateInvoice } from '@/app/lib/actions';
 import { notFound } from 'next/navigation';
 
-export default async function Page({ params }: { params: { id: string } }) {
-    const id = params.id;
-    const [invoice, customers] = await Promise.all([
-        fetchInvoiceById(id),
-        fetchCustomers(),
-    ]);
+export default async function Page() {
+    //const id = params.id;
+    // const [invoice, customers] = await Promise.all([
+    //     fetchInvoiceById(id),
+    //     fetchCustomers(),
+    // ]);
 
-    if (!invoice) {
-        notFound();
-    }
+    // if (!invoice) {
+    //     notFound();
+    // }
 
     return (
         <main>
-            <Breadcrumbs
+            {/* <Breadcrumbs
                 breadcrumbs={[
                     { label: 'Invoices', href: '/dashboard/invoices' },
                     {
@@ -26,7 +26,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                         active: true,
                     },
                 ]}
-            />
+            /> */}
             {/* <Form invoice={invoice} customers={customers} /> */}
         </main>
     );
