@@ -41,7 +41,7 @@ async function getUser(email: string,password: string) {
 export const { auth, signIn, signOut } = NextAuth({ 
   providers: [
     Credentials({
-      async authorize(credentials) {
+      async authorize(credentials:any) {
         const parsedCredentials = z
           .object({ email: z.string(), password: z.string().min(6) })
           .safeParse(credentials);
