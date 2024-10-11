@@ -3,11 +3,11 @@ import * as XLSX from 'xlsx';
 import { createStock } from '@/app/lib/actions';
 import StockField from '@/app/dashboard/customers/stock';
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+// };
 
 export async function POST(req: NextRequest) {
     if (req.method.toLowerCase() === 'post') {
